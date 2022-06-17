@@ -9,8 +9,4 @@ public enum Rank {
     Rank(String rankName) {
         this.rankName = rankName;
     }
-
-    public String getRankName() {
-        return this.rankName;
-    }
 }

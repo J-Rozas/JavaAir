@@ -89,4 +89,14 @@ public class FlightTest {
         assertEquals(0, flight.getAvailableSeats());
         assertEquals(300, flight.getPassengers().size());
     }
+
+    @Test
+    public void pilotShouldBeAbleToFlyThePlane() {
+        assertEquals("I am John and we are about to take off", pilot.fly(flight));
+    }
+
+    @Test
+    public void cabinCrewMembersShouldBeAbleToRelayMessagesToPassengers() {
+        assertEquals("I am Joe and the flight FR756 is about to land", purser.relayMessage(flight));
+    }
 }

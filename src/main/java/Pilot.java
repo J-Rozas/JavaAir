@@ -18,7 +18,7 @@ public class Pilot extends Person {
     }
 
     public String fly(Flight flight) {
-        if (flight instanceof Flight) {
+        if (flight != null) {
             return "I am " + getName() + " and we are about to take off";
         } else {
             return "No flight, so cannot fly";

@@ -16,4 +16,12 @@ public class Pilot extends Person {
     public Rank getRank() {
         return this.rank;
     }
+
+    public String fly(Flight flight) {
+        if (flight instanceof Flight) {
+            return "I am " + getName() + " and we are about to take off";
+        } else {
+            return "No flight, so cannot fly";
+        }
+    }
 }

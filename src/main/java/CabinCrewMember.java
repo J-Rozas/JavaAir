@@ -10,4 +10,8 @@ public class CabinCrewMember extends Person {
     public Rank getRank() {
         return this.rank;
     }
+
+    public String relayMessage(Flight flight) {
+        return "I am " + getName() + " and the flight " + flight.getFlightNumber() + " is about to land";
+    }
 }

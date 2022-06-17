@@ -69,4 +69,24 @@ public class FlightTest {
     public void hasDepartureTime() {
         assertEquals("1st June", flight.getDepartureTime());
     }
+
+    @Test
+    public void canReturnNumberOfAvailableSeats() {
+        assertEquals(300, flight.getAvailableSeats());
+    }
+
+    @Test
+    public void canBookAPassenger() {
+        flight.bookPassenger(passenger);
+        assertEquals(299,  flight.getAvailableSeats());
+    }
+
+    @Test
+    public void shouldNotBookMorePassengersThanAvailableSeats() {
+        for (int i = 0, n = 1000; i < n; i++) {
+            flight.bookPassenger(passenger);
+        }
+        assertEquals(0, flight.getAvailableSeats());
+        assertEquals(300, flight.getPassengers().size());
+    }
 }

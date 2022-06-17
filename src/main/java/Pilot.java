@@ -1,9 +1,9 @@
 public class Pilot extends Person {
 
-    private final CabinCrewMember rank;
+    private final String rank;
     private final String licenseNumber;
 
-    public Pilot(String name, CabinCrewMember rank, String licenseNumber) {
+    public Pilot(String name, String rank, String licenseNumber) {
         super(name);
         this.rank = rank;
         this.licenseNumber = licenseNumber;
@@ -13,7 +13,7 @@ public class Pilot extends Person {
         return this.licenseNumber;
     }
 
-    public CabinCrewMember getRank() {
+    public String getRank() {
         return this.rank;
     }
 }

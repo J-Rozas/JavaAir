@@ -15,9 +15,11 @@ public class FlightTest {
     private ArrayList<Passenger> passengers;
     private Passenger passenger;
     private Plane plane;
+    private FlightManager flightManager;
 
     @Before
     public void before() {
+        flightManager = new FlightManager("John");
         pilot = new Pilot("John", Rank.FIRST_OFFICER, "1871nvsu3");
         purser = new CabinCrewMember("Joe", Rank.PURSER);
         passenger = new Passenger("Jane", 3);
@@ -98,5 +100,11 @@ public class FlightTest {
     @Test
     public void cabinCrewMembersShouldBeAbleToRelayMessagesToPassengers() {
         assertEquals("I am Joe and the flight FR756 is about to land", purser.relayMessage(flight));
+    }
+
+    @Test
+    public void flightManagerShouldBeAbleToCalculateWeightReservedForEachPassenger() {
+        int reservedWeight = flightManager.calculateReservedBaggageWeightPerPassenger(flight);
+        assertEquals(16666, reservedWeight);
     }
 }

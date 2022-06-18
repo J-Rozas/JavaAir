@@ -23,4 +23,8 @@ public class FlightManager extends Person {
 
         return totalWeight;
     }
+
+    public int calculateRemainingWeight(Flight flight) {
+        return calculateReservedBaggageWeightPerPassenger(flight) - calculatedBookedWeight(flight);
+    }
 }

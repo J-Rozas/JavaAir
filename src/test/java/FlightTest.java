@@ -118,4 +118,12 @@ public class FlightTest {
 //        NOTE: We are assuming that all the bags weight the same, i.e., 20
         assertEquals(180, bookedWeight);
     }
+
+    @Test
+    public void flightManagerShouldBeAbleToCalculateRemainingWeightForLuggage() {
+        flight.bookPassenger(passenger);
+        flight.bookPassenger(passenger2);
+        int remainingWeight = flightManager.calculateRemainingWeight(flight);
+        assertEquals(16486, remainingWeight);
+    }
 }

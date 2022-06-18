@@ -14,6 +14,7 @@ public class FlightTest {
     private ArrayList<CabinCrewMember> cabinCrewMembers;
     private ArrayList<Passenger> passengers;
     private Passenger passenger;
+    private Passenger passenger2;
     private Plane plane;
     private FlightManager flightManager;
 
@@ -23,6 +24,7 @@ public class FlightTest {
         pilot = new Pilot("John", Rank.FIRST_OFFICER, "1871nvsu3");
         purser = new CabinCrewMember("Joe", Rank.PURSER);
         passenger = new Passenger("Jane", 3);
+        passenger2 = new Passenger("Jay", 6);
         passengers = new ArrayList<>();
         flightAttendant = new CabinCrewMember("Jay", Rank.FLIGHT_ATTENDANT);
         cabinCrewMembers = new ArrayList<>();
@@ -106,5 +108,14 @@ public class FlightTest {
     public void flightManagerShouldBeAbleToCalculateWeightReservedForEachPassenger() {
         int reservedWeight = flightManager.calculateReservedBaggageWeightPerPassenger(flight);
         assertEquals(16666, reservedWeight);
+    }
+
+    @Test
+    public void flightManagerShouldBeAbleToCalculateWeightBookedByPassengers() {
+        flight.bookPassenger(passenger);
+        flight.bookPassenger(passenger2);
+        int bookedWeight = flightManager.calculatedBookedWeight(flight);
+//        NOTE: We are assuming that all the bags weight the same, i.e., 20
+        assertEquals(180, bookedWeight);
     }
 }

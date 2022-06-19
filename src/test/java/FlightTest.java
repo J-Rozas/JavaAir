@@ -5,11 +5,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class FlightTest {
     private Flight flight;
+    private Flight flight2;
     private Pilot pilot;
     private CabinCrewMember purser;
     private CabinCrewMember flightAttendant;
@@ -18,6 +18,7 @@ public class FlightTest {
     private Passenger passenger;
     private Passenger passenger2;
     private Plane plane;
+    private Plane plane2;
     private FlightManager flightManager;
 
     @Before
@@ -37,6 +38,16 @@ public class FlightTest {
                 pilot,
                 cabinCrewMembers,
                 plane,
+                "FR756",
+                "GLA",
+                "EDI",
+                LocalDate.of(2023, 1, 1)
+        );
+        plane2 = new Plane(PlaneType.SMALL);
+        flight2 = new Flight(
+                pilot,
+                cabinCrewMembers,
+                plane2,
                 "FR756",
                 "GLA",
                 "EDI",
@@ -98,10 +109,10 @@ public class FlightTest {
     @Test
     public void shouldNotBookMorePassengersThanAvailableSeats() {
         for (int i = 0, n = 1000; i < n; i++) {
-            flight.bookPassenger(passenger);
+            flight2.bookPassenger(new Passenger("Joe", 3));
         }
-        assertEquals(0, flight.getAvailableSeats());
-        assertEquals(300, flight.getPassengers().size());
+        assertEquals(0, flight2.getAvailableSeats());
+        assertEquals(10, flight2.getPassengers().size());
     }
 
     @Test
@@ -141,5 +152,29 @@ public class FlightTest {
     public void passengerOnFlightIsAcknowledged() {
         flight.bookPassenger(passenger);
         assertTrue(passenger.getFlightStatus());
+    }
+
+    @Test
+    public void flightHasListOfEmptySeats() {
+        assertEquals(300, flight.getNumberOfEmptySeats());
+    }
+
+    @Test
+    public void passengerGetsUniqueSeatNumberWhenBooking() {
+        flight.bookPassenger(passenger);
+        flight.bookPassenger(passenger2);
+        assertNotEquals(passenger.getSeatNumber(), passenger2.getSeatNumber());
+        assertEquals(298, flight.getNumberOfEmptySeats());
+        assertFalse(flight.getListEmptySeats().contains(passenger.getSeatNumber()));
+        assertFalse(flight.getListEmptySeats().contains(passenger2.getSeatNumber()));
+    }
+
+    @Test
+    public void shouldBeAbleToHandleManyUniqueSeatNumbers() {
+        for (int i = 0, n = 299; i < n; i++) {
+            flight.bookPassenger(new Passenger("Joe", 3));
+        }
+        assertEquals(1, flight.getNumberOfEmptySeats());
+        assertEquals(299, flight.getPassengers().size());
     }
 }

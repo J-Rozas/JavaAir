@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Flight {
 
@@ -11,6 +12,7 @@ public class Flight {
     private final String destination;
     private final String departure;
     private final LocalDate departureTime;
+    private final ArrayList<Integer> emptySeats;
 
     public Flight(Pilot pilot, ArrayList<CabinCrewMember> cabinCrewMembers, Plane plane, String flightNumber, String destination, String departure, LocalDate departureTime) {
         this.pilot = pilot;
@@ -21,6 +23,13 @@ public class Flight {
         this.destination = destination;
         this.departure = departure;
         this.departureTime = departureTime;
+        this.emptySeats = new ArrayList<Integer>() {
+            {
+                for (int i = 1, n = plane.getType().getCapacity(); i <= n; i ++) {
+                    add(i);
+                }
+            }
+        };
     }
 
     public Pilot getPilot() {
@@ -63,7 +72,24 @@ public class Flight {
     public void bookPassenger(Passenger passenger) {
         if (getAvailableSeats() > 0) {
             passenger.setFlightStatus(true);
+            int randomSeatIndex = getRandomSeat();
+            int randomSeatNumber = getListEmptySeats().get(randomSeatIndex);
+            this.emptySeats.remove(randomSeatIndex);
+            passenger.setSeatNumber(randomSeatNumber);
             this.passengers.add(passenger);
         }
+    }
+
+    public int getNumberOfEmptySeats() {
+        return this.emptySeats.size();
+    }
+
+    public ArrayList<Integer> getListEmptySeats() {
+        return this.emptySeats;
+    }
+
+//    Returns a random index
+    public int getRandomSeat() {
+        return new Random().nextInt(getNumberOfEmptySeats());
     }
 }

@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FlightTest {
     private Flight flight;
@@ -135,5 +136,11 @@ public class FlightTest {
         flight.bookPassenger(passenger2);
         int remainingWeight = flightManager.calculateRemainingWeight(flight);
         assertEquals(16486, remainingWeight);
+    }
+
+    @Test
+    public void passengerOnFlightIsAcknowledged() {
+        flight.bookPassenger(passenger);
+        assertTrue(passenger.getFlightStatus());
     }
 }
